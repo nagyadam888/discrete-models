@@ -103,13 +103,13 @@
   \end{sageexample}
 
   
-  Oszthatóság tulajdonságai egész számok esetén:
+  Oszthatóság tulajdonságai természetes számok esetén:
   \begin{enumerate}
     \item Részbenrendezés, azaz
       \begin{itemize}
         \item Reflexív ($\forall a\in\mathbb{Z}: a|a$),
         \item Antiszimmetrikus 
-          ($\forall a,b\in\mathbb{Z}: a|b\wedge b|a\Rightarrow a=b$),
+          ($\forall a,b\in\mathbb{N}: a|b\wedge b|a\Rightarrow a=b$),
         \item Tranzitív 
           ($\forall a,b,c\in\mathbb{Z}: a|b \wedge b|c \Rightarrow a|c$);
       \end{itemize}
@@ -117,7 +117,7 @@
     \item $1$ minden számnak osztója;
     \item $0$ csak saját magának osztója;
     \item ha $a|b$ és $c|d$, akkor $ac|bd$;
-    \item ha $a|b$, akkor $\forall k\in \mathbb{N}: ak|bk$;
+    \item ha $a|b$, akkor $\forall k\in \mathbb{Z}: ak|bk$;
     \item ha $k\in \mathbb{N}\setminus{0}:ak|bk$, akkor $a|b$;
     \item ha $a|b$ és $a|c$, akkor $a|b+c$;
     \item egy pozitív szám minden osztója kisebb vagy egyenlő mint a szám maga.
