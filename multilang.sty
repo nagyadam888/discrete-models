@@ -1,0 +1,251 @@
+%%
+%% This is file `multilang.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% multilang.dtx  (with options: `package')
+%% 
+%% Copyright (C) 2016-2018 by Richard Grewe <r-g+tex@posteo.net>
+%% 
+%% This file may be distributed and/or modified under the conditions of
+%% the LaTeX Project Public License, either version 1.2 of this license
+%% or (at your option) any later version.  The latest version of this
+%% license is in:
+%% 
+%%    http://www.latex-project.org/lppl.txt
+%% 
+%% and version 1.2 or later is part of all distributions of LaTeX version
+%% 1999/12/01 or later.
+%% 
+\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+\ProvidesPackage{multilang}
+    [2018/11/02 v0.9b Tools for maintaining documents in multiple languages]
+
+
+
+
+\RequirePackage{pgfkeys,pgfopts}
+\RequirePackage{etoolbox}
+\RequirePackage{environ}
+\newcommand\multilang@@langs{}
+\pgfqkeys{/multilang/pkg}{
+  languages/.code={\forcsvlist{\listadd\multilang@@langs}{#1}},
+}
+\ProcessPgfOptions{/multilang/pkg}
+\newcommand\NewMultilangCmd[2]{%
+  \bgroup
+  \multilang@processargs{#1}{/multilang/newcommand}{defaults={},#2}%
+  \expandafter\def\expandafter\multilang@@intcmd\expandafter{%
+    \csname multilang@intcmd@\expandafter\@gobble\string#1\endcsname}%
+  \edef\do{\egroup
+    \expandonce{\multilang@@keys}%
+    \ifbool{multilang@@starred}{%
+      \unexpanded{\newcommand#1}{%
+        \noexpand\@ifstar
+          {\expandonce{\multilang@@intcmd}{*}}%
+          {\expandonce{\multilang@@intcmd}{}}}%
+    }{%
+      \unexpanded{\newcommand#1}{\expandonce{\multilang@@intcmd}{}}%
+    }%
+    \noexpand\newcommand{\expandonce{\multilang@@intcmd}}[2]{%
+      \bgroup
+      \noexpand\boolfalse{multilang@cmd@@disabled}%
+      \noexpand\pgfqkeys{\multilang@keyof{#1}}{%
+        \expandonce{\multilang@@defaults},####2}%
+      \noexpand\ifbool{multilang@cmd@@disabled}%
+        {\unexpanded{\def\multilang@@invok{}}}%
+        {\expandonce{\multilang@@checks}%
+          \unexpanded{\edef\multilang@@invok}{%
+            \noexpand\unexpanded{\expandonce{\multilang@@cmd}}####1%
+              \expandonce{\multilang@@actuals}}}%
+      \unexpanded{\expandafter\egroup\multilang@@invok}%
+    }%
+  }\do}
+\newcommand\NewMultilangEnv[2]{%
+  \bgroup
+  \multilang@processargs{#1}{/multilang/newenvir}{defaults={},#2}%
+  \edef\do{\egroup
+    \expandonce{\multilang@@keys}%
+    \unexpanded{\newenvironment{#1}}[1]{%
+      \bgroup
+      \noexpand\boolfalse{multilang@cmd@@disabled}%
+      \noexpand\pgfqkeys{\multilang@keyof{#1}}{####1}%
+      \noexpand\ifbool{multilang@cmd@@disabled}%
+        {\unexpanded{%
+          \def\multilang@@invok{\Collect@Body{\multilang@noend}}}}%
+        {\expandonce{\multilang@@checks}%
+        \unexpanded{\edef\multilang@@invok}{%
+          \noexpand\noexpand\noexpand\begin{\multilang@@env}%
+            \expandonce{\multilang@@actuals}}}%
+      \unexpanded{\expandafter\egroup\multilang@@invok}%
+    }{%
+      \noexpand\end{\multilang@@env}%
+    }%
+  }\do}
+\pgfqkeys{/multilang/cmd-or-env}{
+  margs/.store in={\multilang@@margs},
+  oargs/.store in={\multilang@@oargs},
+  alias/.is family,
+  alias/.unknown/.code={%
+    \listeadd{\multilang@@aliases}{\pgfkeyscurrentname}%
+    \csdef{multilang@@alias@\pgfkeyscurrentname}{#1}},
+  defaults/.store in={\multilang@@defaults},
+  disablable/.is if={multilang@@disablable},
+}
+\newbool{multilang@@disablable}
+\newbool{multilang@cmd@@disabled}
+\pgfqkeys{/multilang/newcommand}{
+  .search also={/multilang/cmd-or-env},
+  command/.store in={\multilang@@cmd},
+  starred/.is if={multilang@@starred},
+  alias/.search also={/multilang/cmd-or-env},
+}
+\newbool{multilang@@starred}
+\pgfqkeys{/multilang/newenvir}{
+  .search also={/multilang/cmd-or-env},
+  environment/.store in={\multilang@@env},
+  alias/.search also={/multilang/cmd-or-env},
+}
+\newcommand\NewMultilangType[3][1]{%
+  \listadd\multilang@@types{#2}%
+  \expandafter\newcommand\csname multilang@@typecmd@#2\endcsname[#1]{#3}%
+  \csdef{multilang@@typeargc@#2}{#1}%
+  \ifcase#1\relax
+     \csdef{multilang@@runcmd@#2}{\csuse{multilang@@typecmd@#2}}%
+  \or\ifcsequal{multilang@@typecmd@#2}{@firstofone}%
+    {\csdef{multilang@@runcmd@#2}{####1}}%
+    {\csdef{multilang@@runcmd@#2}{\csuse{multilang@@typecmd@#2}%
+      {####1}}}%
+  \or\csdef{multilang@@runcmd@#2}{\csuse{multilang@@typecmd@#2}%
+      {####1}{####2}}%
+  \or\csdef{multilang@@runcmd@#2}{\csuse{multilang@@typecmd@#2}%
+      {####1}{####2}{####3}}%
+  \or\csdef{multilang@@runcmd@#2}{\csuse{multilang@@typecmd@#2}%
+      {####1}{####2}{####3}{####4}}%
+  \or\csdef{multilang@@runcmd@#2}{\csuse{multilang@@typecmd@#2}%
+      {####1}{####2}{####3}{####4}{####5}}%
+  \or\csdef{multilang@@runcmd@#2}{\csuse{multilang@@typecmd@#2}%
+      {####1}{####2}{####3}{####4}{####5}{####6}}%
+  \or\csdef{multilang@@runcmd@#2}{\csuse{multilang@@typecmd@#2}%
+      {####1}{####2}{####3}{####4}{####5}{####6}{####7}}%
+  \or\csdef{multilang@@runcmd@#2}{\csuse{multilang@@typecmd@#2}%
+      {####1}{####2}{####3}{####4}{####5}{####6}{####7}{####8}}%
+  \or\csdef{multilang@@runcmd@#2}{\csuse{multilang@@typecmd@#2}%
+      {####1}{####2}{####3}{####4}{####5}{####6}{####7}{####8}{####9}}%
+  \else\multilang@error{Argument count expected to be between 0 and 9, %
+                        but is '#1'}\fi}
+\newcommand\multilang@@types{}
+\newcommand\NewMultilangType@code[3][1]{%
+  \csdef{multilang@@codetype@#2}{true}%
+  \NewMultilangType[#1]{#2}{#3}}
+\newcommand\multilang@regfield[2]{%
+  \pgfqkeys{\multilang@keyof{#1}}{%
+    #2/.code={\csdef{multilang@@val@#2}{##1}}}%
+  \forlistloop{\multilang@regfieldtype{#1}{#2}}{\multilang@@types}}
+\newcommand\multilang@regfieldtype[3]{%
+  \bgroup
+  \ifnumequal{\csuse{multilang@@typeargc@#3}}{1}{%
+    \ifcsdef{multilang@@codetype@#3}{%
+      \edef\do{\egroup\noexpand\pgfqkeys{\multilang@keyof{#1}}{%
+        #2/#3/.code={\csexpandonce{multilang@@runcmd@#3}}%
+      }}%
+    }{%
+      \edef\do{\egroup\noexpand\pgfqkeys{\multilang@keyof{#1}}{%
+        #2/#3/.style={#2={\csexpandonce{multilang@@runcmd@#3}}}%
+      }}%
+    }%
+  }{%
+    \ifcsdef{multilang@@codetype@#3}{%
+      \edef\do{\egroup\noexpand\pgfqkeys{\multilang@keyof{#1}}{%
+        #2/#3/.code n args={\csuse{multilang@@typeargc@#3}}%
+                           {\csexpandonce{multilang@@runcmd@#3}}}}%
+    }{%
+      \edef\do{\egroup\noexpand\pgfqkeys{\multilang@keyof{#1}}{%
+        #2/#3/.style n args={\csuse{multilang@@typeargc@#3}}%
+                           {#2={\csexpandonce{multilang@@runcmd@#3}}}}}%
+    }%
+  }\do}
+\newcommand\multilang@regcomb[3]{%
+  \multilang@regcombtype{#1}{#2}{#3}{}%
+  \forlistloop{\multilang@regcomb@i{#1}{#2}{#3}}{\multilang@@types}}
+\newcommand\multilang@regcomb@i[4]{%
+  \multilang@regcombtype{#1}{#2}{#3}{/#4}}
+\newcommand\multilang@regcombtype[4]{%
+  \bgroup
+  \toks@{}\@tempcnta=0\relax
+  \forcsvlist{%
+    \advance\@tempcnta by1\relax
+    \expandafter\multilang@regcomb@set\expandafter{\the\@tempcnta}{#4}%
+  }{#3}%
+  \ifnumgreater{\the\@tempcnta}{1}{%
+    \edef\do{\egroup\noexpand\pgfqkeys{\multilang@keyof{#1}}{%
+      #2#4/.style n args={\the\@tempcnta}{\the\toks@}}}%
+  }{%
+    \edef\do{\egroup\noexpand\pgfqkeys{\multilang@keyof{#1}}{%
+      #2#4/.style={\the\toks@}}}%
+  }%
+  \do}
+\newcommand\multilang@regcomb@set[3]{%
+  \toks@\expandafter{\the\toks@,#3#2={###1}}}
+\newcommand\multilang@addlanguage[1]{%
+  \ifdefstring{\languagename}{#1}%
+    {\NewMultilangType{#1}{##1}}%
+    {\NewMultilangType@code{#1}{}}%
+  \NewMultilangType{#1!}{\foreignlanguage{#1}{##1}}}
+\forlistloop{\multilang@addlanguage}{\multilang@@langs}
+\newcommand\multilang@keyof[1]{%
+  \ifcat\relax\noexpand#1%
+    /multilang/cmd/\expandafter\@gobble\string#1%
+  \else
+    /multilang/env/#1%
+  \fi}
+\newcommand\multilang@error[1]{\PackageError{multilang}{#1}{}}
+\newcommand\multilang@processargs[3]{%
+  \let\multilang@@aliases=\empty
+  \pgfqkeys{#2}{#3}%
+  \edef\multilang@@actuals{}%
+  \def\multilang@@checks{}%
+  \def\multilang@@keys{}%
+  \ifdefvoid{\multilang@@oargs}{}{%
+    \def\do##1{%
+      \appto{\multilang@@actuals}{%
+        \ifcsmacro{multilang@@val@##1}%
+          {[\csexpandonce{multilang@@val@##1}]}%
+          {}%
+      }%
+      \appto{\multilang@@keys}{\multilang@regfield{#1}{##1}}%
+    }%
+    \expandafter\docsvlist\expandafter{\multilang@@oargs}}%
+  \ifdefvoid{\multilang@@margs}{}{%
+    \def\do##1{%
+      \appto{\multilang@@actuals}{%
+        {\csexpandonce{multilang@@val@##1}}%
+      }%
+      \appto{\multilang@@checks}{%
+        \ifcsmacro{multilang@@val@##1}%
+          {}%
+          {\multilang@error{mandatory argument ##1 missing}}%
+      }%
+      \appto{\multilang@@keys}{\multilang@regfield{#1}{##1}}%
+    }%
+    \expandafter\docsvlist\expandafter{\multilang@@margs}}%
+  \def\do##1{%
+    \eappto{\multilang@@keys}{%
+      \unexpanded{\multilang@regcomb{#1}{##1}}%
+        {\csuse{multilang@@alias@##1}}}}%
+  \expandafter\dolistloop\expandafter{\multilang@@aliases}%
+  \ifbool{multilang@@disablable}%
+    {\eappto{\multilang@@keys}{%
+      \noexpand\pgfqkeys{\multilang@keyof{#1}}{%
+        disabled/.is if={multilang@cmd@@disabled}}}}%
+    {}%
+  \def\multilang@@cmdorenv{#1}%
+  \edef\multilang@@cekey{\multilang@keyof{#1}}%
+  \multilang@hook@processargs
+}
+\newcommand\multilang@hook@processargs{}
+\newcommand\multilang@noend[1]{\cslet{end\@currenvir}{\relax}}
+\endinput
+%%
+%% End of file `multilang.sty'.
