@@ -1,5 +1,13 @@
 \documentclass{amsbook}
 
+% LANGUAGE: choose one of the following line and compile the doc
+\usepackage[magyar]{babel}
+%\usepackage[english]{babel}
+
+\usepackage[languages={english,magyar}]{multilang}
+\usepackage{multilang-sect}
+\usepackage{lecture_notes_commands}
+
 % set font encoding for PDFLaTeX, XeLaTeX, or LuaTeX
 \usepackage{ifxetex,ifluatex}
 \newif\ifxetexorluatex
@@ -21,62 +29,101 @@
   \usepackage{lmodern}
 \fi
 
-\usepackage{chngcntr}
-\counterwithin*{section}{part}
 \usepackage{hyperref}
+\usepackage{sagetex}
+% http://doc.sagemath.org/html/en/tutorial/sagetex.html
 
+% For centering things
+\usepackage{chngcntr}
+
+\usepackage{bookmark}
+
+% The counting will restart for every part.
+\counterwithin*{section}{part}
+
+% There is no identation at the begining of paragragaphs
 \setlength{\parindent}{0pt}
 
-\newtheoremstyle{mystyle}%                % Name
-  {}%                                     % Space above
-  {}%                                     % Space below
-  {\itshape}%                             % Body font
-  {}%                                     % Indent amount
-  {\scshape}%                            % Theorem head font
-  {.}%                                    % Punctuation after theorem head
-  { }%                                    % Space after theorem head, ' ', or \newline
-  {\thmname{#1}\thmnumber{ #2}\thmnote{ (\textbf{#3})}}%Theorem head spec (can be left empty, meaning `normal')
-\theoremstyle{mystyle}
-
-\newtheorem{exercise}{Feladat}[part]
-\newtheorem{definition}{Definíció}[section]
-\newtheorem{theorem}{Tétel}[section]
-
-\title{Diszkrét modellek alkalmazásai}
-\author{Nagy Ádám}
-
-% Enable SageTeX to run SageMath code right inside this LaTeX file.
-% http://doc.sagemath.org/html/en/tutorial/sagetex.html
-\usepackage{sagetex}
+\Title{
+  title/english=Applications of Discrete models,
+  title/magyar =Diszkrét modellek alkalmazásai
+}
+\Author{
+  author/english=Adam Nagy,
+  author/magyar =Nagy Ádám
+}
 
 \begin{document}
+
 \maketitle
 
-\begin{part}{Számelmélet}
-  A \emph{SageMath} programcsomagban az egész számokat a \texttt{ZZ} objektummal kapjuk
-  meg a ,,szokásos``  matematikai definíciónak megfelel\H en.
+\setcounter{part}{1}
+\begin{Part*}{
+    title/english=Number Theory,
+    title/magyar =Számelmélet}
+  
+  \Wrap{
+    content/english={
+      The \emph{SageMath} application gives the whole structure of integer
+      numbers as the \texttt{ZZ} object which behaves according to the "usual"
+      mathematical definition.},
+    content/magyar ={
+      A \emph{SageMath} programcsomagban az egész számokat a \texttt{ZZ}
+      objektummal kapjuk meg a ,,szokásos``  matematikai definíciónak
+      megfelel\H en.}
+  }
   \begin{sageexample}
     sage: type(ZZ)
   \end{sageexample}
   
-  Természetesen nem kell minden esetben használnunk a konstruktort, ha egy
-  egész számmal szeretnénk dolgozni, a rendszer automatikusan felismeri.
+  \Wrap{
+    content/magyar={
+      Természetesen nem kell minden esetben használnunk a konstruktort, ha egy
+      egész számmal szeretnénk dolgozni, a rendszer automatikusan felismeri.
+    },
+    content/english={
+      Fortunatelly there is no need to use the constructor when we want to
+      create an integer, the system automaticly recognizes such numbers. 
+    }
+  }
   \begin{sageexample}
     sage: a,b = ZZ(4), 4
     sage: type(a) == type(b)
     sage: a == b
   \end{sageexample}
 
-  Aritmetiaki m\H uveletek a ,,szokásosak``:
+  \Wrap{
+    content/magyar={Aritmetiaki m\H uveletek a ,,szokásosak``:},
+    content/english={Arithmetic on integers:}
+  }
   \begin{itemize}
-    \item Összeadás, kivonás: \texttt{+,-};
-    \item Szorzás, hatványozás: \texttt{*,\^};
-    \item Egész érték\H u osztás és maradékképzés: \texttt{//,\%}.
+    \item 
+      \Wrap{
+        content/magyar={Összeadás, kivonás},
+        content/english={Addition, substraction}
+      }: \texttt{+,-};
+    \item 
+      \Wrap{
+        content/magyar={Szorzás, hatványozás},
+        content/english={Multiplication, raising to a power}
+      }: \texttt{*,\^};
+    \item 
+      \Wrap{
+        content/magyar={Egész érték\H u osztás és maradékképzés},
+        content/english={Division over the integers and residue}
+      }: \texttt{//,\%}.
   \end{itemize}
   
-  \emph{Megjegyzés:} A \texttt{/} m\H uvelet eredménye általában egy racionális
-  szám, sőt valójában a jelenléte elég, hogy innentől racionálisként
-  tekintsen a megadott adatokra.
+  \Wrap{
+    content/magyar={
+      \emph{Megjegyzés:} A \texttt{/} m\H uvelet eredménye egy racionális
+      szám, sőt valójában a jelenléte elég, hogy innentől racionálisként
+      tekintsen a megadott adatokra.},
+    content/english={
+      \emph{Note:} The result of the \texttt{/} operand is a rational number
+      and in general if this operand  is used then the result's type will 
+      be rational.}
+  }
   \begin{sageexample}
     sage: 2/3
     sage: type(2/3)
@@ -84,13 +131,21 @@
     sage: type(1/1)
   \end{sageexample}
 
-\begin{section}{Oszthatóság}
-  \begin{definition}[Osztó]
-    Az $a$ osztója $b$-nek és $b$ többszöröse $a$-nak, azaz $a|b$, ha
+\begin{Section}{
+    title/english=Divisor,
+    title/magyar=Oszthatóság}
+
+  \begin{definition}[\Wrap{content/magyar=Osztó, content/english=Divisor}]
+    \Wrap{
+      content/magyar={Az $a$ osztója $b$-nek és $b$ többszöröse $a$-nak, azaz $a|b$, ha},
+      content/english={$a$ is a divisor of $b$ and $b$ is a multiple of $a$ that is to say
+        $a|b$, if}
+    }
     \[ \exists c: b = ac.\]
   \end{definition}
     
-  \begin{exercise}Írd meg azt a függvényt, amely eldönti, hogy az els\H o
+  \begin{exercise}
+    Írd meg azt a függvényt, amely eldönti, hogy az els\H o
     argumentuma osztható-e a másodikkal az alábbi példán kív\H ul még 4 
     különböz\H o módon!
   \end{exercise}
@@ -156,7 +211,7 @@
     összege megegyezik a számmal, pl. 6).
   \end{exercise}
   
-  \begin{exercise}[Aliquot] Természetes számok esetén definiálhatjuk a következő
+  \begin{exercise}{Aliquot} Természetes számok esetén definiálhatjuk a következő
     sorozatot: $(s_0 = n; s_{i+1} = \sigma(s_i) - s_i)$, ahol a $\sigma(n)$
     az $n$ osztóinak összege. A sorozat vagy terminál nulla értékkel vagy
     periódikussá válik. Készíts programot, amely egy adott természetes szám 
@@ -420,7 +475,7 @@
         feltételt is.
     \end{itemize}
   \end{exercise}
-\end{section}
+\end{Section}
 
 \begin{section}{Kongruenciák}
   %%% \begin{definition}[Kongruens]
@@ -428,7 +483,7 @@
   % \end{definition}
 \end{section}
 
-\end{part}
+\end{Part*}
 
 \begin{part}{Megoldások}
 

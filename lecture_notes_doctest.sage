@@ -7,19 +7,19 @@ doctest this file with "sage -t lecture_notes_doctest.sage".
 It is always safe to delete this file; it is not used in typesetting your
 document.
 
-Sage example, line 58::
+Sage example, line 75::
 
     sage: type(ZZ)
   
 
-Sage example, line 64::
+Sage example, line 89::
 
     sage: a,b = ZZ(4), 4
     sage: type(a) == type(b)
     sage: a == b
   
 
-Sage example, line 80::
+Sage example, line 127::
 
     sage: 2/3
     sage: type(2/3)
@@ -27,7 +27,7 @@ Sage example, line 80::
     sage: type(1/1)
   
 
-Sage example, line 98::
+Sage example, line 153::
 
     sage: def divides0(a,b):
     ....:     return (a/b).is_integer()
@@ -35,18 +35,18 @@ Sage example, line 98::
     sage: divides0(6,3)
   
 
-Sage example, line 130::
+Sage example, line 185::
 
     sage: k = 15
     ....: P = Poset((Set([2..k]), lambda a,b: b % a == 0))
   
 
-Sage example, line 145::
+Sage example, line 200::
 
     sage: len(P.cover_relations_graph().edges())
   
 
-Sage example, line 217::
+Sage example, line 272::
 
     sage: P1 = plot(x/log(x), (2, 200), scale='semilogy', \
     ....:     fill=lambda x: prime_pi(x),fillcolor='red')
@@ -55,7 +55,7 @@ Sage example, line 217::
     ....: P = graphics_array([P1, P2])
   
 
-Sage example, line 438::
+Sage example, line 493::
 
           sage: def divides0(a,b):
           ....:     return (a/b).is_integer()

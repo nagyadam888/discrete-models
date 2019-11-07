@@ -1,0 +1,50 @@
+
+% Setting the title
+\NewMultilangCmd{\Title}{
+  command=\title, margs=title}
+
+\NewMultilangCmd{\Author}{
+  command=\author, margs=author}
+
+\newcommand{\wrap}[1]{#1}
+
+\NewMultilangCmd{\Wrap}{
+  command=\wrap, margs=content}
+
+\NewMultilangEnv{Part}{disablable,
+  environment=part, oargs=short, margs=title}
+\NewMultilangEnv{Part*}{disablable,
+  environment=multilang@partstar, oargs=short, margs=title}
+\newenvironment{multilang@partstar}{\part*}{}
+
+% A new theoremstyle where you can add an optional name to the command
+\newtheoremstyle{mystyle}%                % Name
+  {}%                                     % Space above
+  {}%                                     % Space below
+  {\itshape}%                             % Body font
+  {}%                                     % Indent amount
+  {\scshape}%                             % Theorem head font
+  {.}%                                    % Punctuation after theorem head
+  { }%                                    % Space after theorem head, ' ', or \newline
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ \textbf{(#3)}}}
+                                          % Theorem head spec (can be left empty, meaning `normal')
+\theoremstyle{mystyle}
+
+\NewMultilangCmd{\NewTheorem}{disablable,
+  command=\newtheorem, margs={command,name}}
+\NewTheorem{
+  command=definition,
+  name/magyar={Definíció},
+  name/english={Definition}
+}[section]
+\NewTheorem{
+  command=theorem,
+  name/magyar={Tétel},
+  name/english={Theorem}
+}[section]
+\NewTheorem{
+  command=exercise,
+  name/magyar={Feladat},
+  name/english={Exercise}
+}[part]
+
