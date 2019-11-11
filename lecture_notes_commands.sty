@@ -11,6 +11,7 @@
 \NewMultilangCmd{\Wrap}{
   command=\wrap, margs=content}
 
+
 \NewMultilangEnv{Part}{disablable,
   environment=part, oargs=short, margs=title}
 \NewMultilangEnv{Part*}{disablable,
@@ -21,12 +22,12 @@
 \newtheoremstyle{mystyle}%                % Name
   {}%                                     % Space above
   {}%                                     % Space below
-  {\itshape}%                             % Body font
+  {}%                                     % Body font
   {}%                                     % Indent amount
-  {\scshape}%                             % Theorem head font
-  {.}%                                    % Punctuation after theorem head
+  {\bfseries}%                            % Theorem head font
+  { }%                                    % Punctuation after theorem head
   { }%                                    % Space after theorem head, ' ', or \newline
-  {\thmname{#1}\thmnumber{ #2}\thmnote{ \textbf{(#3)}}}
+  {\thmname{#1}\thmnumber{ #2}.\thmnote{ \textit{(#3)}}}
                                           % Theorem head spec (can be left empty, meaning `normal')
 \theoremstyle{mystyle}
 
@@ -47,4 +48,12 @@
   name/magyar={Feladat},
   name/english={Exercise}
 }[part]
+
+\NewMultilangCmd{\Caption}{disablable,
+  command=\caption, margs={text}}
+%\NewTheorem{
+%  command=solution,
+%  name/magyar={Megoldás},
+%  name/english={Solution}
+%}
 
