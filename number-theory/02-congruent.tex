@@ -1,0 +1,209 @@
+\begin{definition}[\Wrap{content/magyar=Kongruencia,content/english=Congruent}]
+  \Wrap{
+    content/magyar={Az $a$ és $b$ számok kongruensek modulo $m$ ($m>0$), azaz
+      \[ a\equiv b \mod m\text{, amennyiben }m|(a-b).\]},
+    content/english={The numbers of $a$ and $b$ are congruent modulo $m$ ($m>0$), i.e.
+      \[a\equiv b(\mod m)\text{, if }m|(a-b).\]}
+  }
+\end{definition}
+
+\Wrap{
+  content/magyar={A kongruencia mint reláció reflexív, szimmetrikus és tranzitív is, azaz
+    ekvivalenciareláció, így meghatározza az alaphalmaz egy osztályozását.},
+  content/english={The congruence as a relation is reflexive, symmetric and transitive, thus
+    an equivalence relation, which implies a partitioning of the set its defined over.}
+}
+\begin{exercise}
+  \Wrap{
+    content/magyar={Írj programot, amely egy egész számokat tartalmazó halmaz elemeit osztályozza
+      modulo $m$, ahol az $m$ a második paraméter.},
+    content/english={Write a program that sorting the elements of a given set (first argument)
+      modulo $m$ (second argument).}
+  }
+
+  \begin{solution}
+    \begin{sageexample}
+      sage: def residue_sets(S,m):
+      ....:     rs = {}
+      ....:     for e in S:
+      ....:         r = e % m
+      ....:         if r in rs.keys():
+      ....:             rs[r].add(e)
+      ....:         else:
+      ....:             rs[r] = set([e])
+      ....:     return rs
+  \end{solution}
+\end{exercise}
+
+\begin{definition}[\Wrap{content/magyar={Maradékrendszer}, content/english={Residue system}}]
+  \Wrap{
+    content/magyar={Egész számok esetén a kongruencia mint ekvivalenciareláció által
+      meghatározott osztályokat \emph{maradékosztály}nak, míg rendszerüket \emph{maradékrendszer}nek
+      nevezzük.},
+    content/english={TODO}
+  }
+\end{definition}
+
+\Wrap{
+  content/magyar={Számolás során a maradékosztályokat egy-egy reprezentánsukkal szoktuk jelölni,
+    például $m$ esetén gyakori a $0,1,\dots,m-1$ (legkisebb nem negatív reprezentások) vagy
+    egész számok esetén a $-\lfloor \frac{m-1}{2}\rfloor,\dots,0,\dots,\lceil\frac{m-1}{2}\rceil$
+    (legkisebb abszolút értékű reprezentások) használata.},
+  content/english={TODO}
+}
+
+\begin{definition}[\Wrap{content/magyar={Redukált maradékrendszer}, content/english={Reduced residue system}}]
+  \Wrap{
+    content/magyar={Ha a maradékrendszerből elhagyjuk az összes olyan maradékosztályt melyek elemei
+      nem relatív prímek a modulushoz, akkor megkapjuk a \emph{redukált maradékrendszer}t.},
+    content/english={TODO}
+  }
+\end{definition}
+
+\begin{definition}[\Wrap{content/magyar={Euler-féle $\varphi$ függvény}}]
+  \Wrap{
+    content/magyar={A $\varphi:\mathbb{N}\to\mathbb{N}$ függvényt az Euler-féle $\varphi$
+      függvénynek nevezzűk, ha $\varphi(m)$ a modulo $m$ redukált maradékrendszerek száma, azaz},
+    content/english={TODO}
+  }
+  \[\varphi(m) = \left|\{k\in\mathbb{Z}:1\le k< m\wedge (k,m)=1\}\right|.\]
+\end{definition}
+
+\Wrap{
+  content/magyar={Ha $p$ egy prím és $n$ tetszőleges természetes szám, akkor a $\varphi(p^n) =p^n-p^{n-1}$
+    könnyen kapható, hiszen pontosan minden $p$-edik maradékosztály tartalmaz $p$-vel osztható
+    számokat, a többiben relatív prímek vannak $p$-hez és így $p^n$-hez is. Össztett számokkal való
+    számoláshoz elég észrevenni, hogy a $\varphi$ számelméleti függvény multiplikatív, azaz
+    relatív prím $a,b$ számokra $\varphi(ab)=\varphi(a)\varphi(b)$.},
+  content/english={TODO}
+}
+
+\begin{exercise}
+  \Wrap{
+    content/magyar={Írj programotfüggvényt, amely az Euler-féle $\varphi$ függvény értékét
+      számolja ki! Ellenőrzéshez használható az \texttt{euler\_phi} parancs.},
+    content/english={TODO}
+  }
+
+  \begin{solution}
+    TODO
+  \end{solution}
+\end{exercise}
+
+\begin{definition}[\Wrap{content/magyar=Lineáris kongruenciák, content/english=Linear congruence}]
+  \Wrap{
+    content/magyar={Az $a,b$ egész és $m$ pozitív egész számok esetén a \[ax\equiv b\ (m)\] alakú
+      kongruenciákat \emph{lineáris kongruenciának} hívjuk.},
+    content/english={TODO}.
+  }
+\end{definition}
+
+\Wrap{
+  content/magyar={A kongruencia és oszthatóság definíciót használva kapjuk, hogy},
+  content/english={TODO}
+}
+\[ ax\equiv b\ (m) \Leftrightarrow m|ax-b \Leftrightarrow ax-b = my \Leftrightarrow ax-my=b.\]
+\Wrap{
+  content/magyar={Tehát a lineáris kongruencia megoldásait megkaphatjuk a megfelelő lineáris
+    diofantikus probléma megoldásával, ami alapján},
+  content/english={TODO}
+}
+\begin{itemize}
+  \item $(a,m)|b$
+    \Wrap{
+      content/magyar=szükséges és elégséges feltétel a megoldás létezésére;,
+      content/english={TODO}
+    }
+  \item
+    \Wrap{
+      content/magyar={$acx\equiv bc\ (cm)$ kongruencia megoldásait megkaphatjuk a
+        $ax\equiv b\ (m)$ kongruenca megoldásával;},
+      content/english={TODO}
+    }
+  \item
+    \Wrap{
+      content/magyar={$(a,m)=1$ esetén mindkét oldalt oszthatjuk $(a,b)$-vel;},
+      content/english={TODO}
+    }
+  \item
+    \Wrap{
+      content/magyar={$(a,m)=1$ és $(b,m)=c$ esetén a $ax\equiv b\ (m)$ kongruencia megoldásait
+        kaphatjuk a $ax\equiv b/c\ (m/c)$ kongruencia megoldásával.},
+      content/english={TODO}
+    }
+\end{itemize}
+
+\begin{exercise}
+  \Wrap{
+    content/magyar={Írj eljárást lineáris kongruenciák megoldására! Ellenőrzéshez használható a
+      \texttt{solve\_mod} parancs.},
+    content/english={TODO}
+  }
+  \begin{solution}
+    TODO
+  \end{solution}
+\end{exercise}
+
+\begin{definition}[\Wrap{content/magyar={Moduláris inverz}, content/english=Modular inverse}]
+  \Wrap{
+    content/magyar={Az $ax\equiv 1\ (m)$ kongruenciának megoldását (ha van) az $a$ szám
+      \emph{moduláris inverz}ének nevezzük modulo $m$.},
+    content/english={TODO}
+  }
+\end{definition}
+
+\begin{definition}[\Wrap{content/magyar=Lineáris kongruencia-rendszer, content/english=System of congruences}]
+  \Wrap {
+    content/magyar={Legyen $1<n\in\mathbb{N}$, $a_i,b_i\in\mathbb{Z}$ és $1<m_i\in\mathbb{N}$
+      ($1\le i\le n$). Ekkor a \[a_ix\equiv b_i\ (m_i) \quad(1\le i\le n)\] kongruenciákat \emph{lineáris
+      kongruencia-rendszer}nek hívunk és csak olyan $x$ egész számot tekintünk megoldásnak, amely
+      mindegyiknek külön-külön is megoldása.},
+    content/english={TODO}
+  }
+\end{definition}
+
+\Wrap{
+  content/magyar={ A kongruenciarendszerek megoldásának megkereséséhez tekintsünk csak két
+    kongruenciát és első lépésként oldjuk meg őket külön-külön. Ezek után a feladat az
+    \[ x\equiv c_1 (m_1)\text{ és } x\equiv c_2 (m_2), \] kongruenciarendszer megoldásainak
+    megtalálása.
+  },
+  content/english={TODO}
+}
+
+\begin{theorem}[(Kis) Fermat-tétel]
+  Ha $p$ prím és $a$ tetszőleges egész szám, akkor\[ a^{p-1}\equiv 1\ (p).\]
+\end{theorem}
+
+\begin{theorem}[Euler-Fermat-tétel]
+  Ha $a$ és $m$ relatív prímek, akkor \[ a^{\varphi(m)}\equiv 1\ (m), \] ahol $\varphi$ az
+  Euler-féle $\varphi$ függvény.
+\end{theorem}
+
+\begin{definition}[RSA asszimetrikus titkosítás]
+  Általában egy asszimetrikus titkosítási sémánál két kulcs áll rendelkezésre (egy publikus és egy
+  privát) és a két kucsot egymás után használva visszakapjuk az üzenetet. \emph{RSA} séma esetén
+  \begin{itemize}
+    \item választunk két elég nagy és megfelelő formájú $p$, $q$ prímet,
+    \item egy $e>1$ kitevőt és
+    \item számoljuk ki $n=pq$-t, illetve
+    \item egy $d$ egész számot, melyre $ed\equiv 1\ (\varphi(n)=(p-1)(q-1))$.
+  \end{itemize}
+  A publikus kulcs $(n,e)$, a privát kulcs $(n,d)$ lesz és egy $m<n$ szám mint üzenet titkosított
+  formáját kapjuk az $s = m^d \mod n$ kiszámolásával. A visszafejtés az Euler-Fermat-tétel
+  használatával \[ s^d\equiv (m^d)^e\equiv m^{ed}\equiv m^{\varphi(m)q+1}\equiv m\ (n). \]
+\end{definition}
+
+\begin{definition}[Diszkrét logarimus probléma]
+  Vegyünk egy $p$ prímet és egy olyan $g$ számot, amely hatványaival modulo $p$ előállítja az
+  összes $p$-nél kisebb pozitív számot. Ekkor egy $a$ esetén a $g^a\mod p$ értékből $a$
+  meghatározását diszkrét logaritmus problémának hívjuk.
+\end{definition}
+
+\begin{definition}[Diffie-Hellman kulcscsere]
+  A diszkrét logaritmus problémánál használt $p$ és $g$ publikus paramétereket használva két
+  kommunikációs fél (Alice és Bob) tud közös értékben (kulcs) megállapodni Diffie-Hellman
+  sémát használva. A séma során mindkét fél választ egy-egy véletlen értéket (titok) és számolják a
+  $g^a$ és $g^b$ publikus értékeket. Ezek alapján mindketten ki tudják számolni a közös kulcsot:
+  \[g^{ab} = (g^a)^b = (g^b)^a.\]
+\end{definition}
