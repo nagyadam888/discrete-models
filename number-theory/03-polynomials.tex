@@ -1,0 +1,117 @@
+
+\begin{definition}[\Wrap{content/magyar=Polinom, content/english=Polynomial}]
+  \Wrap{
+    content/magyar={
+      Legyen $R$ egy olyan struktúra, amelyen van értelmezve egy additív és egy
+      multiplikatív művelet (például egész számok vagy egy maradékrendszer). Ekkor az $f_i\in R$
+      $(i\in\mathbb{N})$ elemekkel, mint együtthatókkal az \[f=(f_0,f_1,\dots)\] sorozatot
+      polinomnak nevezzük, ha véges sok eleme nem a nullelem.},
+    content/english={TODO}
+  }
+\end{definition}
+
+\Wrap{
+  content/magyar={
+    Egy adott struktúra feletti polinomokhoz rendelhetünk változót is, amely segít a polinomok
+    kezelésében és jelöli az adott polinomhoz tartozó struktúrát is. Például $x$ jelölheti az egész
+    számok fölötti polinomok változóját és ekkor az előző definicióban szereplő $f$ polinom írható
+    az \[f = f(x) = f_0 + f_1 x + f_2 x^2 + \dots +f_n = \sum_{i=0}^{n} f_i x^i, \]
+    ha minden $n$-nél nagyobb indexű együttható a nullelem. },
+  content/english={TODO}
+}
+
+\begin{definition}[\Wrap{content/magyar=Fokszám, content/english=Degree}]
+  \Wrap{
+    content/magyar={
+      Egy $f$ polinom esetén a legnagyobb olyan $n\in\mathbb{N}$ indexet, amelyre $f_n$ nem
+      nulla \emph{fokszám}nak hívjuk. Ha nincs ilyen, azaz a poinom csak nulla elemet tartalmaz
+      (nulla poinom), akkor a fokszám legyen $-\infty$. Jelölése: $\deg(f)$.},
+    content/english={TODO}
+  }
+\end{definition}
+
+%TODO polynomial function
+
+\begin{definition}[\Wrap{content/magyar=Műveletek polinomokkal, content/english=Arithmetic of polynomials}]
+
+  \Wrap{
+    content/magyar={
+      Legyen $f$ az $f_i$ és $g$ a $g_i$ $(i\in\mathbb{N})$együtthatókkal érelmezett polinomok. Ekkor
+      a struktúrán értelmezett műveletek segítségével a polinomk fölött is értelmezhetünk aritmetikai
+      műveleteket:
+      \begin{itemize}
+        \item \emph{összeadás} elemenként történik, tehát
+          \[(f+g)_i = f_i + g_i\]
+          és az eredmény fokszámára $\deg(f+g)\le \max\{\deg(f), \deg(g)\}$
+        \item \emph{szorzás}nál minend együtthatót minden együtthatóval össze kell szorozni és az
+          eredményt az együtthatók összegével megfelelő indexhez kell adni, azaz
+          \[ (fg)_i=\sum_{i=j+k}f_j g_k = \sum_{j=0}^i f_i g_{i-j}\]
+          és az eredmény fokszámára $\deg(fg)=\deg(f)+\deg(g)$ (ha nincs olyan két elem $R$-ben,
+          melyek szorzata nulla).
+      \end{itemize}
+    },
+    content/english={TODO}
+  }
+\end{definition}
+
+\begin{exercise}
+  Írj polinom osztályt, ahol definiálva van a fokszám és az aritmetika!
+
+  \begin{solution}
+    TODO
+  \end{solution}
+\end{exercise}
+
+\begin{definition}[\Wrap{content/magyar=Polinomfüggvény, content/english=Polynomial function}]
+  \Wrap{
+    content/magyar={Egy $R$ fölött értelmezett polinomfüggvényen az $\widehat{f}:C\to C$
+    leképezést értjük, ha $R\subseteq C$ és $\widehat{f}(c)=f(c)$ a polinom kiértékelése $c$
+    helyen.}
+  }
+\end{definition}
+
+\begin{definition}[\Wrap{content/magyar=Horner-elrendezés, content/english=Horner method}]
+    \Wrap{
+      content/magyar={Egy $n$-edfokú polinom defnició szerinti kiértékelése $n-1$ összeadással és
+        $n(n+1)/2$ szorzással jár. A szorzások számára ennél jóval jobb ($n-1$ db) eljárást kapunk a
+        \emph{Horner elrendezés}t haszálva: \[ f(x) = \sum_{i=0}^n f_i x^i =
+        f_0 + x(f_1 + x(f_2 + \dots + x(f_{n-1} + xf_n)\dots)). \]},
+      content/english={TODO}
+    }
+\end{definition}
+
+\begin{exercise}
+  \Wrap{
+    content/magyar={
+      Egészítsd ki az előző feladatban adott polinomosztályt egy kiértékelő függvényargumentummal, ami
+      a kiértékelést Horner-elrendezésnek megfelelően készíti el!},
+    content/english={TODO}
+  }
+\end{exercise}
+
+\Wrap{
+  content/magyar={
+    Egy polinom és annak kiértékelési helyei között szoros kapcsolat áll. Nyilvánvalóan egy polinom
+    egyértelmüen meghatározza, hogy milyen értéket vesz az fel egy adott helyen. Kevésbé nyilvánvaló,
+    hogy egy $n$-edfokú polinomot egyértelműen meghatároz annak $n+1$ különböző helyen felvett értéke.
+    Legyenek ezek a különböző helyek $x_i$-vel  és a felvett értékek $y_i=f(x_i)$-vel jelöve
+    $(0\le i \le n)$. Ha sikerülne minden $x_i$ helyhez külön-külön egy-egy olyan $n$-edfokú
+    $p_i()$ polinomot konstruálni, amely az $i$-edik helyen $y_i$ értéket a többi $x_j$ $(j\neq i)$
+    helyen pedig nullát vesz fel akkor \[f(x) = \sum_{i=0}^{n} p_i(x).\] Egy polinom akkor vesz
+    fel egy adott $x_j$ helyen nullát, ha az felírható a $p_i(x) = (x-x_j)r_{ij}(x)$ alakban arra
+    alkalmas $r_{ij}$ polinommal. Ez alapján a \[ \prod_{i\neq j=0}^n (x-x_j) \] polinom minden
+    $x_i$-től különböző helyen nullát vesz fel. Ahhoz hogy $x_i$ helyen $y_i$-t vegyen fel osszuk
+    el a jelenleg felvett értékével $x_i$ helyen majd szorozzuk $y_i$-vel, azaz
+    \[ p_i(x) = y_i\frac{\prod_{i\neq j=0}^n (x-x_j)}{\prod_{i\neq j=0}^n (x_i-x_j)} =
+      y_i\prod_{i\neq j=0}^n\frac{x-x_j}{x_i-x_j}.\]
+  },
+  content/english={TODO}
+}
+
+\begin{theorem}[\Wrap{content/magyar=Lagrange-interpoláció, content/english=Lagrange interpolation}]
+  Egy $f$ $n$-edfokú polinomot egyértelműen meghatároz annak $n+1$ páronként különböző helyen
+  felvett értéke és ha $(x_i, y_i)\ (0\le i\le n)$ a hely-érték párok, akkor a polinom felírható a
+  \[
+    f(x) = \sum_{i=0}^n y_i\prod_{i\neq j=0}^n\frac{x-x_j}{x_i-x_j}
+  \] alakban.
+\end{theorem}
