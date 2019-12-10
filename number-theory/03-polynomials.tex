@@ -30,8 +30,6 @@
   }
 \end{definition}
 
-%TODO polynomial function
-
 \begin{definition}[\Wrap{content/magyar=Műveletek polinomokkal, content/english=Arithmetic of polynomials}]
 
   \Wrap{
@@ -45,7 +43,7 @@
           és az eredmény fokszámára $\deg(f+g)\le \max\{\deg(f), \deg(g)\}$
         \item \emph{szorzás}nál minend együtthatót minden együtthatóval össze kell szorozni és az
           eredményt az együtthatók összegével megfelelő indexhez kell adni, azaz
-          \[ (fg)_i=\sum_{i=j+k}f_j g_k = \sum_{j=0}^i f_i g_{i-j}\]
+          \[ (fg)_i=\sum_{i=j+k}f_j g_k = \sum_{j=0}^i f_j g_{i-j}\]
           és az eredmény fokszámára $\deg(fg)=\deg(f)+\deg(g)$ (ha nincs olyan két elem $R$-ben,
           melyek szorzata nulla).
       \end{itemize}
@@ -105,6 +103,7 @@
     \[ p_i(x) = y_i\frac{\prod_{i\neq j=0}^n (x-x_j)}{\prod_{i\neq j=0}^n (x_i-x_j)} =
       y_i\prod_{i\neq j=0}^n\frac{x-x_j}{x_i-x_j}.\]
   },
+  %TODO add here a good example with drawings
   content/english={TODO}
 }
 
@@ -115,3 +114,47 @@
     f(x) = \sum_{i=0}^n y_i\prod_{i\neq j=0}^n\frac{x-x_j}{x_i-x_j}
   \] alakban.
 \end{theorem}
+
+\begin{exercise}
+    \Wrap{
+      content/magyar={Írj programot, amely megvalósítja a Lagrange-interpolációt egész számokra,
+        azaz egy $n$ elemű egész számokból alkotott párokból ($x_i,y_i$) álló lista esetén
+        visszaadja az egész együtthatós interpolációs polinomot (ha van ilyen az egész számok
+        felett)! Ellenőrzéshez használható a \[\mathtt{PolynomialRing(QQ).lagrange\_polynomial(L)}\]
+        függvény.},
+      content/english={TODO}
+    }
+
+    \begin{solution}
+      TODO
+    \end{solution}
+\end{exercise}
+
+\begin{definition}[\Wrap{content/magyar=Shamir-féle titokmegosztás, content/english=Shamir's secret sharing}]
+  \Wrap{
+    content/magyar={Az $S$ titok és $D=\{S_1, S_2, \dots, S_n\}$ látszólag véletlen és látszólag
+      $S$-től független adat megfelel a \emph{Shamir-féle titokmegosztás}i sémának $(n,k)$
+      paraméterekkel, ha
+      \begin{itemize}
+        \item Bármely legfeljebb $k-1$ elemű részhalmaza $D$-nek alkalmatlan $S$-re vonatkozó
+          információ megszerzésére.
+        \item Bármely legalább $k$ elemű részhalmaza $D$-nek alkalmas $S$ helyreállítására.
+      \end{itemize}
+    },
+    content/english={TODO}
+  }
+\end{definition}
+
+\begin{exercise}
+  \Wrap{
+    content/magyar={
+      Lagrange-interpoláció segítségével valósítsd meg a Shamir-féle titokmegosztást! (Segítség:
+        Titok lehet egy amúgy véletlen $n-1$-edfokú polinom konstans tagja.)
+    },
+    content/english={TODO}
+  }
+
+  \begin{solution}
+    TODO
+  \end{solution}
+\end{exercise}

@@ -1,0 +1,80 @@
+\Wrap{
+  content/magyar={
+    A forráskódolás a kódok hosszával foglalkozik, vagyis azzal a kérdéssel, hogy az adott
+    mennyiségű információt mekkora mennyiségű adattal tudjuk tárolni. Ehhez szükségünk van az
+    információ alapegységére $r$, amely bináris esetben 2.
+  },
+  content/english={TODO}
+}
+
+\begin{definition}[\Wrap{content/magyar=Entrópia, content/english=Entropy}]
+  \Wrap{
+    content/magyar={
+      A kódolt és kódolatlan üzenetek ($m$) karakterekre bonthatóak, melyek önmagukban is, de
+      leginkább az üzenetben elfoglalt helyük segítségével információt tárolnak. Arra hogy mennyi
+      információt hordoz egy üzenet a karakterek rendezetlensége utal. Például egy egyetlen
+      karaktert ismételgető forrás által küldött forrás információmennyisége kisebb mint egy olyané
+      ami a karaktereket valamilyen bonyolutabb szabály szerint fűzi egymás után (szöveg). Erre a
+      rendezetlenségre és így a relatív információmennyiségre utal az \emph{entrópia}, amely ha az
+      egyes karakterek előfordulásának valószínűsége $p_1,p_2,\dots,p_n$ $m$-ben, akkor értéke
+      \[ H_r(m) = -\sum_{i=1}^n p_i\log_r p_i. \]},
+    content/english={TODO}
+  }
+\end{definition}
+
+\Wrap{
+  content/magyar={Az entrópia értéke akkor a legkisebb ($0$), ha az üzenet csak egy karaktert
+    tartalmaz; és akkor a legnagyobb ($\log_r n$), ha minden üzenet azonos valószínüséggel szerepel.
+    Ebből közvetlenül tudunk következtetni, hogy a szöveg mennyire ,,tömör'', mivel az
+    entrópia megadja hogy a karaktereket mennyire ,,jól'' alkalmazzuk.
+ },
+  content/english={TODO}
+}
+
+\Wrap{
+  content/magyar={A kódolás során legfontosabb szempont a dekódolhatóság. Egy kódhalmaz
+    (kódszavakat tartalmazó halmaz) azon tulajdonsága, hogy bármely belőle készített kódolt
+    egyértelműen dekódolható-e azonban nem minden esetben könnyű, így szokás a kódhalmazra (kódra)
+    vonatkozó következő fogalmakat definiálni.},
+  content/english={TODO}
+}
+
+\begin{definition}[\Wrap{content/magyar={Felbontható, egyenletes, vesszős és prefix kód}, content/english={TODO}}]
+  \Wrap{
+    content/magyar={Legyen a kódszavak ábécéje $B$ és $\alpha, \beta, \gamma\in B*$ az ábécé
+      feletti szavak (nem feltétlenül kódszavak). A kód ekkor},
+    content/english={TODO}
+  }
+  \begin{itemize}
+    \item\Wrap{
+      content/magyar={\emph{felbontható}, ha bármely szöveg egyértelműen dekódolható;},
+      content/english={TODO}}
+    \item\Wrap{
+      content/magyar={\emph{egyenletes}, ha minden kódszó azonos számú karaktert tartalmaz;},
+      content/english={TODO}
+    }
+    \item\Wrap{
+    content/magyar={\emph{vesszős}, ha minden kódszó felírható az $\alpha\gamma$ alakban és
+      ha $\alpha\gamma\beta$ kódszó, akkor a $\beta = \varepsilon$, ahol $\varepsilon$ az üres szó
+      és $\gamma\neq\varepsilon$;},
+    content/english={TODO}
+    }
+    \item\Wrap{
+    content/magyar={\emph{prefix}, ha a kódszavak halmaza prefixmentes, azaz ha az
+      $\alpha\neq\varepsilon$és $\alpha\beta$ is kódszó, akkor $\beta=\varepsilon$;},
+    content/english={TODO}
+    }
+  \end{itemize}
+
+\end{definition}
+
+\begin{definition}[\Wrap{content/magyar=Betűnkénti kódolás, content/english={TODO}}]
+  A kódolás betűnként történik, ha a szöveg $A$ ábécéje és a kódszavak $B$ ábécéje között létezik
+  egy $\varphi\in A\to B$ injektív (minden értéket felvesz pontosan egyszer) leképezés.
+\end{definition}
+
+% TODO remove this when there is other type of source coding introduced in the document
+\Wrap{
+  content/magyar={A továbbiakban csak betűnkénti kódolásról fogunk beszélni.},
+  content/english={TODO}
+}

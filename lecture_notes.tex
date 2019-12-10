@@ -69,7 +69,13 @@
 
 \end{Part*}
 
-\begin{part}{Megoldások}
+\setcounter{part}{2}
+\setcounter{section}{0}
+\begin{Part*}{ title/english=Coding Theory, title/magyar=Kódoláselmélet}
+    \input{coding-theory/00.tex}
+\end{Part*}
+
+\begin{Part*}{title/magyar=Megoldások, title/english=Solutions}
 
   \begin{section}{Számelmélet}
 
@@ -99,10 +105,9 @@
           ....:         a *= sign(a)
           ....:     return a == 0 or a == b
 
-          \end{sageexample}
+      \end{sageexample}
+  \end{section}
 
-      \end{section}
+\end{Part*}
 
-    \end{part}
-
-    \end{document}
+\end{document}
