@@ -1,105 +1,39 @@
-\begin{definition}[\Wrap{content/magyar=Osztó, content/english=Divisor}]
-  \Wrap{
-    content/magyar={Az $a$ osztója $b$-nek és $b$ többszöröse $a$-nak, azaz $a|b$, ha},
-    content/english={$a$ is a divisor of $b$ and $b$ is a multiple of $a$ that is to say
-      $a|b$, if}
+    asgdag
   }
-  \[ \exists c: b = ac.\]
-\end{definition}
-
-\begin{exercise}
-  \Wrap{
-    content/magyar={
-      Írd meg azt a függvény, amely edönti, hogy az első argumentuma osztható-e a másodikkal az alábbi
-      példán kívűl még 4 különböző módon!
-    },
-    content/english={
-      Write a function that decides whether its first argument can be divided with its second argument 4
-      different way beside the example below!
-    }
-  }
-  \begin{sageexample}
-    sage: def divides0(a,b):
-    ....:     return (a/b).is_integer()
-    sage: divides0(5,2)
-    sage: divides0(6,3)
-  \end{sageexample}
-
-  \begin{solution}
-    \Wrap{
-      content/magyar={Sok megoldás elképzelhető, például:},
-      content/english={There are a lot of possible solutions, a few for example:}
-    }
-    \begin{sageexample}
-        sage: def divides0(a,b):
-        ....:     return (a/b).is_integer()
-        sage: def divides1(a,b):
-        ....:     return a % b == 0
-        sage: def divides2(a,b):
-        ....:     return (a//b)*b == a
-        sage: def divides3(a,b):
-        ....:     return (a/b).denom() == 1
-        sage: def divides4(a,b): #there is room to improve
-        ....:     if a == 0:
-        ....:         return True
-        ....:     b *= sign(b)
-        ....:     if b == 1:
-        ....:         return True
-        ....:     q = b
-        ....:     a *= sign(a)
-        ....:     while q <= a:
-        ....:         q <<= 1
-        ....:     while a > b:
-        ....:         q >>= 1
-        ....:         a -= q
-        ....:         a *= sign(a)
-        ....:     return a == 0 or a == b
-
-      \end{sageexample}
-  \end{solution}
 \end{exercise}
 
-\emph{
-  \Wrap{
-    content/magyar={Oszthatóság tulajdonságai természetes számok esetén:},
-    content/english={Properties of divison over natural numbers:}
-  }
-}
+\begin{sageexample}
+  sage: def divides0(a,b):
+  ....:     return (a/b).is_integer()
+  sage: divides0(5,2)
+  sage: divides0(6,3)
+\end{sageexample}
+
+
+Oszthatóság tulajdonságai természetes számok esetén:
 \begin{enumerate}
-  \item \Wrap{ content/magyar={Részbenrendezés, azaz}, content/english={Partial ordering, i.e.}}
+  \item Részbenrendezés, azaz
     \begin{itemize}
-      \item \Wrap{content/magyar=Reflexív, content/english=Reflexive}
-        ($\forall a\in\mathbb{Z}: a|a$),
-      \item \Wrap{ content/magyar=Antiszimmetrikus, content/english=Antisymmetric}
+      \item Reflexív ($\forall a\in\mathbb{Z}: a|a$),
+      \item Antiszimmetrikus
         ($\forall a,b\in\mathbb{N}: a|b\wedge b|a\Rightarrow a=b$),
-      \item \Wrap{content/magyar=Tranzitív, content/english=Transitive}
+      \item Tranzitív
         ($\forall a,b,c\in\mathbb{Z}: a|b \wedge b|c \Rightarrow a|c$);
     \end{itemize}
-  \item \Wrap{
-    content/magyar=minden szám osztja $0$-t,
-    content/english=every number divides $0$};
-  \item $1$ \Wrap{
-    content/magyar=minden számnak osztója,
-    content/english=divides every number};
-  \item $0$ \Wrap{
-    content/magyar=csak saját magának osztója,
-    content/english=only divides $0$};
-  \item $a|b \wedge c|d \Rightarrow ac|bd$;
-  \item $a|b \Rightarrow \forall k\in \mathbb{Z}: ak|bk$;
-  \item $k\in \mathbb{N}\setminus{0}:ak|bk \Rightarrow a|b$;
-  \item $a|b \wedge a|c \Rightarrow a|b+c$;
-  \item \Wrap{
-    content/magyar=egy pozitív szám minden osztója kisebb vagy egyenlő mint a szám maga.,
-    content/english=every divisor of a number is less or equal then the number itself.}
+  \item minden szám osztja $0$-t;
+  \item $1$ minden számnak osztója;
+  \item $0$ csak saját magának osztója;
+  \item ha $a|b$ és $c|d$, akkor $ac|bd$;
+  \item ha $a|b$, akkor $\forall k\in \mathbb{Z}: ak|bk$;
+  \item ha $k\in \mathbb{N}\setminus{0}:ak|bk$, akkor $a|b$;
+  \item ha $a|b$ és $a|c$, akkor $a|b+c$;
+  \item egy pozitív szám minden osztója kisebb vagy egyenlő mint a szám maga.
 \end{enumerate}
 
-\Wrap{
-  content/magyar={A részbenrendezések, így az oszthatóság is megadható egy speciális objektummal},
-  content/english={In \emph{SageMath} a partial ordering can be represented with a special object}}:
+A részbenrendezések, így az oszthatóság is megadható egy speciális objektummal:
 \texttt{Poset} (\emph{P}artially \emph{O}rdered \emph{S}et).
-\Wrap{
-  content/magyar={Az ilyen objektumot ábrázolva kapjuk a részberendezések szemléltetésére használt Hasse-diagramot.}
-  content/english={By the graphical representation of such an object, we get a Hasse-diagram.}}
+Az ilyen objektumot ábrázolva kapjuk a részberendezések szemléltetésére
+használt Hasse-diagramot.
 \begin{sageexample}
   sage: k = 15
   ....: P = Poset((Set([2..k]), lambda a,b: b % a == 0))
@@ -107,61 +41,21 @@
 \begin{figure}[h!]
   \centering
   \sageplot[scale=.6][png]{P.plot(talk=True)}
-  \Caption{
-    text/magyar={Hasse-diagram oszthatóság esetén $2$ és $k$ közötti természetes számokon. (\texttt{P.plot(talk=True)})},
-    text/english={Hasse-diagram for division for natural numbers between $2$ and $k$. (\texttt{P.plot(talk=True)})}
-  }
+  \caption{Hasse-diagram oszthatóság esetén $2$ és $k$ közötti természetes
+  számokon.  (\texttt{P.plot(talk=True)})}
 \end{figure}
 
-\begin{exercise}
-  \Wrap{
-    content/magyar={Írj programot, amely egy adott számhalmaz esetén megszámolja hány él van az oszthatóság
-      relációhoz tartozó  Hasse-diagramban! Ellenőrzésre lehet használni az alábbi kódot.},
-    content/english={Write program that counts how many edges are in the division relation's Hasse-diagram of
-      of a given set. The below command can be used for testing the output.}
-  }
-
-  \begin{sageexample}
-    sage: len(P.cover_relations_graph().edges())
-  \end{sageexample}
-
-  \begin{solution}
-    \Wrap{
-      content/magyar={Faktorizáció és gráfok nélkül.},
-      content/english={Without factorization and gaphs.}
-    }
-    \begin{sageexample}
-      sage: def edges_in_div_hasse(S):
-      ....:     count = 0
-      ....:     L = list(S)
-      ....:     L.sort(reverse=True)
-      ....:     for i in range(1,len(L)):
-      ....:         S = set()
-      ....:         for j in range(i-1,-1,-1):
-      ....:             if L[j] % L[i] == 0:
-      ....:                 direct = True
-      ....:                 for k in S:
-      ....:                     if L[j] % L[k] == 0:
-      ....:                         direct = False
-      ....:                         break
-      ....:                 if direct:
-      ....:                     S.add(j)
-      ....:                     count += 1
-      ....:     return count
-    \end{sageexample}
-  \end{solution}
+\begin{exercise} Írj programot, amely egy adott számhalmaz esetén megszámolja hány
+  él van az oszthatóság relációhoz tartozó  Hasse-diagramban! Ellen\H orzésre lehet
+  használni az alábbi kódot.
 \end{exercise}
+\begin{sageexample}
+  sage: len(P.cover_relations_graph().edges())
+\end{sageexample}
 
-\begin{exercise} \Wrap{
-    content/magyar={Írj programot, amely egy adott egész szám esetén kiírja osztóinak számát, illetve
-      osztóinak összegét! Ellenőrzéshez használhatjuk a \texttt{sigma(n,0)} és \texttt{sigma(n,1)} parancsokat.},
-    content/english={Write a program that write out the number of divisors and the sum of divisors for a given
-      integer. You can use \texttt{sigma(n,0)} and \texttt{sigma(n,1)} for testing.}
-  }
-
-  \begin{solution}
-      TODO
-  \end{solution}
+\begin{exercise} Írj programot, amely egy adott egész szám esetén kiírja
+  osztóinak számát, illetve osztóinak összegét! Ellenőrzéshez
+  használhatjuk a \verb|sigma(n,0)| és \verb|sigma(n,1)| parancsokat.
 \end{exercise}
 
 \begin{exercise} Írj programot, amely a természetes számok egy adott

@@ -56,7 +56,42 @@
   Írj polinom osztályt, ahol definiálva van a fokszám és az aritmetika!
 
   \begin{solution}
-    TODO
+    \begin{sageexample}
+      sage: class my_poly(object):
+      ....:     def __init__(self, F):
+      ....:         self.__coeffs = F
+      ....:     def deg(self):
+      ....:         d = len(self.__coeffs)-1
+      ....:         while d >= 0 and self.__coeffs[d] == 0:
+      ....:             d -= 1
+      ....:         if d >= 0:
+      ....:             return d
+      ....:         return -Infinit
+      ....:     def __add__(self, other):
+      ....:         L, i = [], 0
+      ....:         while i < len(self.__coeffs) and i < len(other.__coeffs):
+      ....:             L.append(self.__coeffs[i] + other.__coeffs[i])
+      ....:             i += 1
+      ....:         while i < len(self.__coeffs):
+      ....:             L.append(self.__coeffs[i])
+      ....:             i += 1
+      ....:         while i < len(other.__coeffs):
+      ....:             L.append(other.__coeffs[i])
+      ....:             i += 1
+      ....:         return my_poly(L)
+      ....:     def __mul__(self, other):
+      ....:         L, i = [], 0
+      ....:         # as the definition goes
+      ....:         for i in range(len(self.__coeffs) + len(other.__coeffs)-1):
+      ....:             L.append(0)
+      ....:             j = max(0, i-len(self.__coeffs)+2)
+      ....:             while j <= i and j < len(self.__coeffs):
+      ....:                 L[i] += self.__coeffs[j]*other.__coeffs[i-j]
+      ....:                 j += 1
+      ....:         return my_poly(L)
+      ....:     def __repr__(self):
+      ....:         return str(self.__coeffs)
+    \end{sageexample}
   \end{solution}
 \end{exercise}
 
@@ -85,6 +120,17 @@
       a kiértékelést Horner-elrendezésnek megfelelően készíti el!},
     content/english={TODO}
   }
+
+  \begin{solution}
+    \begin{sageexample}
+      sage: class my_poly2(my_poly):
+      ....:     def eval(self, x):
+      ....:         y = 0
+      ....:         for c in self._my_poly__coeffs:
+      ....:             y = x*y + c
+      ....:         return y
+    \end{sageexample}
+  \end{solution}
 \end{exercise}
 
 \Wrap{
