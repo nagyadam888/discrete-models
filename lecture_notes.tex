@@ -41,7 +41,9 @@
 
 \usepackage{version}
 \newenvironment{version}{\relax}{\relax}
-\excludeversion{solution}
+%\excludeversion{solution}
+
+
 
 % The counting will restart for every part.
 \counterwithin*{section}{part}
@@ -75,39 +77,39 @@
     \input{coding-theory/00.tex}
 \end{Part*}
 
-\begin{Part*}{title/magyar=Megoldások, title/english=Solutions}
-
-  \begin{section}{Számelmélet}
-
-    \subsection{} Sok-sok megoldás elképzelhet\H o, például:
-      \begin{sageexample}
-          sage: def divides0(a,b):
-          ....:     return (a/b).is_integer()
-          sage: def divides1(a,b):
-          ....:     return a % b == 0
-          sage: def divides2(a,b):
-          ....:     return (a//b)*b == a
-          sage: def divides3(a,b):
-          ....:     return (a/b).denom() == 1
-          sage: def divides4(a,b): #there is room to improve
-          ....:     if a == 0:
-          ....:         return True
-          ....:     b *= sign(b)
-          ....:     if b == 1:
-          ....:         return True
-          ....:     q = b
-          ....:     a *= sign(a)
-          ....:     while q <= a:
-          ....:         q <<= 1
-          ....:     while a > b:
-          ....:         q >>= 1
-          ....:         a -= q  
-          ....:         a *= sign(a)
-          ....:     return a == 0 or a == b
-
-      \end{sageexample}
-  \end{section}
-
-\end{Part*}
+%\begin{Part*}{title/magyar=Megoldások, title/english=Solutions}
+%
+%  \begin{section}{Számelmélet}
+%
+%    \subsection{} Sok-sok megoldás elképzelhet\H o, például:
+%      \begin{sageexample}
+%          sage: def divides0(a,b):
+%          ....:     return (a/b).is_integer()
+%          sage: def divides1(a,b):
+%          ....:     return a % b == 0
+%          sage: def divides2(a,b):
+%          ....:     return (a//b)*b == a
+%          sage: def divides3(a,b):
+%          ....:     return (a/b).denom() == 1
+%          sage: def divides4(a,b): #there is room to improve
+%          ....:     if a == 0:
+%          ....:         return True
+%          ....:     b *= sign(b)
+%          ....:     if b == 1:
+%          ....:         return True
+%          ....:     q = b
+%          ....:     a *= sign(a)
+%          ....:     while q <= a:
+%          ....:         q <<= 1
+%          ....:     while a > b:
+%          ....:         q >>= 1
+%          ....:         a -= q
+%          ....:         a *= sign(a)
+%          ....:     return a == 0 or a == b
+%
+%      \end{sageexample}
+%  \end{section}
+%
+%\end{Part*}
 
 \end{document}
