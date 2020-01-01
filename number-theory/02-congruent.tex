@@ -189,8 +189,8 @@
 }
 
 \Wrap{
-  content/magyar={Az általános megoldás megtalálásához az előzőek alapján tegyük fel, hogy
-    $(m_1, m_2)=1$ és keressük $x$-et $x=x_1+x_2$ alakban, ahol \[
+  content/magyar={Az általános $c_1$- és $c_2$-től független megoldás megtalálásához az előzőek
+    alapján feltehetjük, hogy $(m_1, m_2)=1$ és kereshetjük $x$-et $x=x_1+x_2$ alakban, ahol \[
       \begin{array}{ccccccccc}
         x_1 & \equiv & c_1 & (m_1) & \quad & x_1 & \equiv & 0   & (m_2) \\
         x_2 & \equiv & 0   & (m_1) & \quad & x_2 & \equiv & c_2 & (m_2).
@@ -199,7 +199,7 @@
     Ebből $x_1$-re $m_1|x_1-c_1$ és $m_2|x_1$, azaz $m_1u_1 = x_1-c_1$ és $m_2v_2 = x_1$, tehát
     ha $m_1u+m_2v=1$, akkor \[
       c_1 = m_1u_1-m_2v_1 = m_1uc_1 + m_2vc_1.
-    \]Így $x_1=c_1-m_1uc_1 = m_2vc_1$ és hasonlóan $x_2=c_2-m_2vc_2=m_1uc_2$. Ez alapján azt
+    \]Így $x_1=c_1-m_1uc_1 = m_2vc_1$ és hasonlóan $x_2=c_2-m_2vc_2=m_1uc_2$. Azt
     kaptuk, hogy a fenti két kongruenciából álló rendszer egy megoldása \[ x = c_1m_2v + c_2m_1u. \]
   },
   content/english={TODO}
@@ -209,8 +209,14 @@
   content/magyar={Az nyilvánvaló, hogy az $x+km_1m_2$ is megoldás lesz tetszőleges $k$ egész
     számra, továbbá a megoldás egyértelmű is modulo $m_1m_2$, mivel bármely két megoldás
     különbsége 0 modulo $m_1$ és $m_2$ is, azaz a megoldások közötti különbség a $[m_1,m_2]$
-    többszöröse kell hogy legyen. },
+    többszöröse kell hogy legyen.},
   content/english={TODO}
+}
+
+\Wrap{
+  content/magyar={A megoldás előállítsánál a $(m_1,m_2)=1$ feltételt csak közvetetten használtuk
+    és a korábbiak alapján megoldás akkor és csak akkor kapható, ha $(m_1,m_2)|c_1-c_2$. Ekkor a
+    megoldások hasonló módon elkészíthetőek az $m_1u+m_2v=(m_1,m_2)$ egyenletből }
 }
 
 \begin{theorem}[\Wrap{content/magyar=Kínai maradéktétel (KMT), content/english=Chinese remainder theorem (CRT)}]

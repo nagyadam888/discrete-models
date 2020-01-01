@@ -1,0 +1,88 @@
+\Wrap{
+  content/magyar={A kódolási feladatok esetén a kódolt üzenetnek egy csatornán keresztül kell
+    eljutnia a fogadóhoz. Ez a csatorna lehet zajmentes, azaz garantált az, hogy amit a küldő a
+    csatornába juttatott a fogadó hiba nélkül megkapja. Sajnos a valós alkalmazások esetén nincs így,
+    alacsony kommunikációs szinten nem tudjuk vagy nem éri meg garantálni a bithelyes áramlást.
+    A megoldás az, hogy olyan ún.~hibakorlátozókódot kunstruálunk, ami képes jelezni és/vagy
+    javítani az átvitel közben keletkezett hibát. Az ilyen kódokok konstruálása általában nem
+    egyszerű feladat és több tényezőt is figyelembe kell venni, mint például
+    \begin{itemize}
+        \item hijelző és hibajavító képesség;
+        \item mennyivel lesz hosszabb a kódolt adat;
+        \item mennyibe ,,kerül'' a kódolás és/vagy a dekódolás;
+        \item milyen típusú (pl. csomókban vagy elszórtan) és eloszlású hibára számíthatunk.
+    \end{itemize}
+    },
+  content/english={TODO}
+}
+
+\begin{definition}[\Wrap{content/magyar={(Pontosan) $t$-hibajelző kód}, content/english=TODO}]
+  \Wrap{
+    content/magyar={Egy kódot \emph{$t$-hibajelző}nek nevezünk, ha bármely $t$ hibát képes
+      jelezni és \emph{pontosan $t$-hibajelző}, ha legfeljebb $t$ hibát tud biztosan észlelni,
+      azaz van olyan $t+1$ hiba, amit már nem. },
+    content/english={TODO}
+  }
+\end{definition}
+
+\begin{definition}[\Wrap{content/magyar={(Pontosan) $t$-hibajavító kód}, content/english=TODO}]
+  \Wrap{
+    content/magyar={Egy kódot \emph{$t$-hibajavító}nek nevezünk, ha bármely $t$ hibát képes
+      javítani és \emph{pontosan $t$-hibajavító}, ha legfeljebb $t$ hibát tud biztosan javítani,
+      azaz van olyan $t+1$ hiba, amit már nem. },
+    content/english={TODO}
+  }
+\end{definition}
+
+\begin{definition}[\Wrap{content/magyar={Ismétléses-kód}, content/english={TODO}}]
+    Talán a legegyszerűbb kódkonstrukció közé tartozsik az \emph{ismétléses-kód}, ami esetén
+    minen egyes karaktert $1<k$-szor megismétlünk. Például a $01001$-ből $000111000000111$ lesz, ha
+    $k=3$.
+\end{definition}
+
+Látható az ismétléses kód pontosan $k-1$ hibát képes jelezni, hiszen ha a $k$ hiba egyetlen
+kódolás előtti karakterhez tartozik, akkor azt hibásan fogja dekódolni. A konstrukció hibája
+is egyértelmű, $t$ hiba jelzéséhez $t+1$-szer hosszabb kódot készít. t=1 esetén a duplázó kóddal
+megegyező hibajelző képeséggel (a definíció szerint) a paritásbites kódolással.
+
+\begin{definition}[Paritásbites kód]
+    A paritásbites kódot úgy kapjuk, hogy minden bináris szót kiegészítünk egy bittel annak
+    megfelelően, hogy a benne lévő 1-esek száma páros vagy páratlan. Ha a páratlan számú egyesek
+    esetén 1-et írunk a szóhoz különben 0-t, akkor \emph{párosra kiegészített paritásbites
+    kódolás}t kajuk, míg ha pont fordítva járunk el akkor a \emph{páratlanra} egészítünk ki.
+\end{definition}
+
+A paritásbittel való kiegészítés 1 hibát tud észlelni, mivel már két bit változása esetén ismét
+érvényes kódszót kapunk.
+
+Észrevehető, hogy a hibajelző képesség attól függ, hogy legalább hány változtatás szükséges ahhoz,
+hogy érvényes kódszót kapjunk. Ehhez a kapcsolat pontos kimondásához ad segítséget a következő
+definíció.
+
+\begin{definition}[Hamming távolság]
+    Egy kód két szava közötti \emph{Hamming távolság}án $d(u,v)$ azon poziciók számát értjük, ahol a
+    két szó eltér egymástól. Például $d(0110,1011) = 3$. A teljes kód távolságán a kódszavak
+    távolságának minimumát értjük értjük, azaz \[ d(C)= \min\{d(u,v)|u,v\in C\}.\]
+\end{definition}
+
+Ha egy kód távolsága $d$, akkor az pontosan $d-1$ hibajavító, hiszen $d-1$ módosítás esetén biztosan
+nem kaphatunk érvényes kódszót, de van olyan szópár, amely $d$ módosítással felcserélhetők.
+
+A hibajavító képességhez először meg kell állapodni abban, hogy hogyan szeretnénk javítani a
+hibákat, azaz meg kell állapodni abban a leképezésben, ami a nem kódszavakat kódszavakra képezi le.
+Ehhez is a távlság fogalmát fogjuk használni.
+
+\begin{definition}[Minimális súlyú dekódolás]
+    A \emph{minimális súlyú dekódolás} esetén a fogadott nem kódszavakat úgy dekódoljuk, mintha a
+    hozzá legközlebbi érvényes kódszót kaptuk volna, ha van ilyen.
+\end{definition}
+
+Minimális súlyú dekódolás esetén a hibajavító képesség már kónnyen megadható a kód távolságának
+ismeretében. Ha a kódban csak a távolság felénél kevesebb hiba keletkezett, akkor az még mindig
+közelebb lesz az eredeti kódszóhoz mint bármely másikhoz, így helyesen javítunk, azaz a $d$
+távolsággal rendelkező kód pontosan $\lfloor\frac{d-1}{2}\rfloor$ hibajaító.
+
+\begin{definition}{Kétdimenziós paritásbites kódolás}
+    TODO
+\end{definition}
+

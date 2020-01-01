@@ -12,11 +12,12 @@
     content/magyar={
       A kódolt és kódolatlan üzenetek ($m$) karakterekre bonthatóak, melyek önmagukban is, de
       leginkább az üzenetben elfoglalt helyük segítségével információt tárolnak. Arra hogy mennyi
-      információt hordoz egy üzenet a karakterek rendezetlensége utal. Például egy egyetlen
-      karaktert ismételgető forrás által küldött forrás információmennyisége kisebb mint egy olyané
-      ami a karaktereket valamilyen bonyolutabb szabály szerint fűzi egymás után (szöveg). Erre a
-      rendezetlenségre és így a relatív információmennyiségre utal az \emph{entrópia}, amely ha az
-      egyes karakterek előfordulásának valószínűsége $p_1,p_2,\dots,p_n$ $m$-ben, akkor értéke
+      információt hordoz egy üzenet a hosszához viszonyítva a karakterek rendezetlensége utal.
+      Például egy egyetlen karaktert ismételgető forrás által küldött üzenet információmennyisége
+      kisebb mint egy olyané ami ugyanolyan hosszú, több karaktert használ és a karaktereket
+      valamilyen bonyolutabb szabály szerint fűzi egymás után. Erre a rendezetlenségre és így a
+      relatív információmennyiségre utal az \emph{entrópia}, amely ha az egyes karakterek
+      előfordulásának valószínűsége $p_1,p_2,\dots,p_n$ $m$-ben, akkor értéke
       \[ H_r(m) = -\sum_{i=1}^n p_i\log_r p_i. \]},
     content/english={TODO}
   }
@@ -25,23 +26,23 @@
 \Wrap{
   content/magyar={Az entrópia értéke akkor a legkisebb ($0$), ha az üzenet csak egy karaktert
     tartalmaz; és akkor a legnagyobb ($\log_r n$), ha minden üzenet azonos valószínüséggel szerepel.
-    Ebből közvetlenül tudunk következtetni, hogy a szöveg mennyire ,,tömör'', mivel az
-    entrópia megadja hogy a karaktereket mennyire ,,jól'' alkalmazzuk.
+    Ebből közvetlenül tudunk következtetni, hogy egy szöveg mennyire ,,tömör'', mivel az
+    entrópia megadja hogy a karaktereket mennyire ,,jól'' alkalmazzuk adott hosszon.
  },
   content/english={TODO}
 }
 
 \Wrap{
-  content/magyar={A kódolás során legfontosabb szempont a dekódolhatóság. Egy kódhalmaz
-    (kódszavakat tartalmazó halmaz) azon tulajdonsága, hogy bármely belőle készített kódolt
-    egyértelműen dekódolható-e azonban nem minden esetben könnyű, így szokás a kódhalmazra (kódra)
-    vonatkozó következő fogalmakat definiálni.},
+  content/magyar={A kódolás során legfontosabb szempont a dekódolhatóság, azaz egy kódhalmaz
+    (kódszavakat tartalmazó halmaz) azon tulajdonsága, hogy bármely belőle készített kódolt üzenet
+    egyértelműen dekódolható-e. Azonban ennek ellenőrzése nem minden esetben könnyű, így szokás a
+    kódhalmazra (kódra) vonatkozó következő fogalmakat definiálni.},
   content/english={TODO}
 }
 
 \begin{definition}[\Wrap{content/magyar={Felbontható, egyenletes, vesszős és prefix kód}, content/english={TODO}}]
   \Wrap{
-    content/magyar={Legyen a kódszavak ábécéje $B$ és $\alpha, \beta, \gamma\in B*$ az ábécé
+    content/magyar={Legyen a kódszavak ábécéje $B$ és $\alpha, \beta, \gamma\in B^*$ az ábécé
       feletti szavak (nem feltétlenül kódszavak). A kód ekkor},
     content/english={TODO}
   }
@@ -55,13 +56,13 @@
     }
     \item\Wrap{
     content/magyar={\emph{vesszős}, ha minden kódszó felírható az $\alpha\gamma$ alakban és
-      ha $\alpha\gamma\beta$ kódszó, akkor a $\beta = \varepsilon$, ahol $\varepsilon$ az üres szó
-      és $\gamma\neq\varepsilon$;},
+      ha $\alpha\gamma\beta$ kódszó, akkor a $\beta = \varepsilon$, ahol $\varepsilon$ az
+      egyeteln karaktert sem tartalmazó szó és $\gamma\neq\varepsilon$;},
     content/english={TODO}
     }
     \item\Wrap{
     content/magyar={\emph{prefix}, ha a kódszavak halmaza prefixmentes, azaz ha az
-      $\alpha\neq\varepsilon$és $\alpha\beta$ is kódszó, akkor $\beta=\varepsilon$;},
+      $\alpha\neq\varepsilon$ és $\alpha\beta$ is kódszó, akkor $\beta=\varepsilon$;},
     content/english={TODO}
     }
   \end{itemize}
@@ -69,7 +70,7 @@
 \end{definition}
 
 \begin{definition}[\Wrap{content/magyar=Betűnkénti kódolás, content/english={TODO}}]
-  A kódolás betűnként történik, ha a szöveg $A$ ábécéje és a kódszavak $B$ ábécéje között létezik
+  A kódolás betűnként történik, ha a szöveg $A$ ábécéje és a kódszavak $B$ halmaza között létezik
   egy $\varphi\in A\to B$ injektív (minden értéket felvesz pontosan egyszer) leképezés.
 \end{definition}
 
@@ -78,3 +79,276 @@
   content/magyar={A továbbiakban csak betűnkénti kódolásról fogunk beszélni.},
   content/english={TODO}
 }
+
+\begin{definition}[\Wrap{content/magyar=Kódfa, content/english=Codetree}]
+  \Wrap{
+    content/magyar={Egy kódhalmaz esetén a kódszavak felírhatóak egy fa segítségevel. A fa csúcsai
+      szavak (nem feltétlenül kódszavak), az éleit pedig a kódszvak lehetséges karaktereivel
+      címkézzük. A fa
+      gyökerében az üres szó szerepel és egy szóhoz tartozó csúcs leszármazottai azok a szavak,
+      amelyeket úgy kapunk, hogy a szó után írjuk az élen szereplő karaktert. A kódfa az a
+      legkevesebb csúcsot tartalmazó ilyen tulajdonságú fa, ami tartalmazza az összes kódszót.}
+  }
+\end{definition}
+
+\begin{sageexample}
+  sage: def make_code_tree(C):
+  ....:     G = DiGraph()
+  ....:     for c in C:
+  ....:         prev = ''
+  ....:         for i in range(1,len(c)+1):
+  ....:             G.add_edge(prev, c[0:i], c[i-1])
+  ....:             prev = c[0:i]
+  ....:     return G
+  sage: C = {'1011', '1100', '0110', '1110', '1010', '0101', '101'}
+  sage: G = make_code_tree(C)
+  sage: d = {'#00FF00': [v for v in G.vertices() if v not in C],
+  ....:      '#FF0000': list(C)}
+  ....: GP = G.plot(layout='tree', vertex_size=2000,
+  ....:             vertex_color=d, edge_labels=True)
+\end{sageexample}
+
+\begin{figure}[ht]
+  \centering
+  \sageplot[scale=.4][png]{GP, figsize=10}
+  \caption{Kódfa a \texttt{C} kód esetén (\texttt{GP.show(figsize=10)}), kódszvak pirossal jelölve}
+\end{figure}
+
+\begin{theorem}[McMillan]
+  \Wrap{
+    content/magyar={Ha egy felbontható kód kódszavainak hossza rendre $\ell_1, \ell_2,\dots,
+    \ell_n$ és a kódszavak ábécéjének elemszáma $r$, akkor \[\sum_{i=1}^n r^{-\ell_i}\le 1.\]},
+    content/english={TODO}
+  }
+\end{theorem}
+
+\Wrap{
+  content/magyar={A tétel alapján a felbontható kód szavainak hosszára kapunk alsó korlátot, azaz
+    arra, hogy adott paraméterek mellett legalább milyen hosszúaknak kell lennie egy felbontható
+    kód szavainak.},
+  content/english={TODO}
+}
+
+\begin{theorem}[Kraft]
+  \Wrap{
+    content/magyar={A \emph{McMillan} tétel megfordítása is igaz, sőt ha az $\ell_1,\ell_2,\dots,
+      \ell_n$ olyan számok, amelyek megfelelnek a McMillan tételnél adott egyenlőtelnségnek, akkor
+      konstruálható olyan prefix (így felbontható) kód, amelynek szóhosszai az adott számok.},
+    content/english={TODO}
+  }
+\end{theorem}
+
+\Wrap{
+  content/magyar={A tétel következménye, hogy a felbontható de nem prefix kódok jelentősége nem
+    nagy, hiszen az ilyen kódok helyett adható egy ugyanolyan tulajdonságokkal rendelkező prefix
+    kód is.},
+  content/english={TODO}
+}
+
+\begin{theorem}[\Wrap{content/magyar=Shannon zajmentes csatornára, content/english=Shannon's source conding}]
+  \Wrap{
+    content/magyar={ Legyen egy kód átlagos szóhosszúsága $\overline{\ell}$, az egyes szavak
+      relatív gyakorisága $p_1,p_2,\dots,p_n$. Ekkor \[ H_r(p_1,p_2,\dots,p_n)\le\overline{\ell} .\]},
+    content/english={TODO}
+  }
+\end{theorem}
+
+\begin{definition}[\Wrap{content/magyar=Optimális kód, content/english=Optimal code}]
+  \Wrap{
+    content/magyar={Egy (betűnkéti) kódot optimálisnak nevezünk, ha az előző tétel jelöléseivel
+      \[ \overline{\ell}\le H_r(p_1,p_2,\dots,p_n)+1.\]}
+  }
+\end{definition}
+
+\Wrap{
+  content/magyar={Egy optimális kód a fentieknek megfelelően a gyakori karakterekhez rövid
+  kódszavakat, míg a ritkákhoz rövidebbet rendel; így a kódolt szöveg információmennyisége relatív
+  nagy lesz. Érdemes azonban megjegyezn, hogy nem betűnkénti kódolás esetén nagyobb mértékű
+  tömörítés (rövidebb reprezentáció)is elérhető.}
+}
+
+\Wrap{
+  content/magyar={A továbbiakban három konstrukciót fogunk mutatni optimális kód
+    előállítására, melyek közül igazából csak a Huffman-féle kódkonstrukció garantálja az optimális
+    kódot. Az első kettő esetén csak azt tudjuk garantálni, hogy a kapott kód közel van az
+    optimálishoz, így ezeket csak szuboptimális kódnak is nevezhetjük.},
+  content/english={TODO}
+}
+
+\Wrap{
+  content/magyar={Mindhárom konstrukciónál feltesszúk, hogy adott egy szöveghez tartozó egyes
+    karakterekre számolt $p_1\ge p_2\ge\dots,\ge p_n$ relatív gyakoriságok.}
+}
+\begin{definition}[\Wrap{content/magyar=Shannon-kód, content/english=Shannon-code}]
+  A szöveghez tartozó \emph{Shannon-kód}ot a kvetkező konstrukcióval kapjuk:
+  \begin{enumerate}
+    \setcounter{enumi}{-1}
+    \item Rendezzük a gyakoriságokat csökkenő sorrendbe.
+    \item Számoljuk ki a leendő kódhosszokat $\ell_i=\lceil -\log_r p_i\rceil$ ($1\le i\le n$).
+    \item Az $i$-edik karakterhez tartozó kódszót megkapuk a
+      \[\left\lfloor 2^{\ell_i}\sum_{j=0}^{i-1}p_i\right\rfloor \] szám $\ell_i$ hosszú bináris
+      reprezentációjaként.
+  \end{enumerate}
+\end{definition}
+
+\begin{definition}[\Wrap{content/magyar=Fano-kód, content/english=Fano-code}]
+  A kód előállítása során egy kódfát fogunk építeni felülről lefelé.
+  \begin{enumerate}
+    \setcounter{enumi}{-1}
+    \item Rendezzük a gyakoriságokat csökkenő sorrendbe.
+    \item Osszuk fel két részre a kapott valószínűség sorozatokat úgy, hogy a bal oldal
+      elemeinek együttes valószínűsége a lehető legközelebb legyen a jobb oldal valószínűségeinek
+      összgéhez.
+    \item A bal oldalon szereplő valószínűségekhez tartozó kódszók $0$-val, a jobb oldalhoz
+      tartozók $1$-gyel kezdődnek/folytatódnak.
+    \item Végezzük el az előző két pontban ismertetett eljárást rekurzívan mindkét részsorozatra,
+      amíg 1 hosszú sorozatokat nem kapunk.
+  \end{enumerate}
+\end{definition}
+
+\begin{definition}[\Wrap{content/magyar=Huffman-kód, content/english=Huffman-code}]
+  A kód előállítása során itt is egy kódfát fogunk építeni, de most alúlról felfelé.
+  \begin{enumerate}
+    \item Rendezzük a gyakoriságokat csökkenő sorrendbe.
+    \item Vonjuk össze a két legkisebb gyakoriságot és a hozzájuk tartozó karakterek közül a
+      kisebb gyakorisággal rendelkező $0$-val, a másik $1$-el végződik.
+    \item Az összevonás eredményét helyezzük el a sorozatba és ismételjük meg a teljes eljárást
+      rekurzívan addig, amíg már csak egy gyakoriság lesz.
+  \end{enumerate}
+\end{definition}
+
+\Wrap{
+  content/magyar={Tekintsük példaként azt a szöveget, ami az $A,B,C,D$ és $E$ karaktereket
+    tartalmazza rendre $16,8,7,6,3$ számossággal.},
+  content/english={TODO}
+}
+\begin{sageexample}
+  sage: abc = ['A', 'B', 'C', 'D', 'E']
+  ....: num = [ 16,   8,   7,   6,   3]
+  ....: s = sum(num)
+  ....: P = [(k/s).n(digits=3) for k in num]
+\end{sageexample}
+
+\begin{table}[ht]
+  \centering
+  \sage{table([abc, num, P], header_row=True, header_column=["ch", "db", "$p_i$"], frame=True)}
+\end{table}
+
+\Wrap{
+  content/magyar={Shannon-kód számolása:},
+  content/english={TODO}
+}
+\begin{sageexample}
+  sage: ell = [ceil(-log(p, 2)) for p in P]
+  ....: sc = [(floor(sum(P[0:i]) << ell[i])).binary().rjust(ell[i],'0')
+  ....:       for i in range(len(abc))]
+\end{sageexample}
+
+\begin{table}[ht]
+  \centering
+  \sage{table([abc, P, ell, sc], header_row=True, header_column=["ch", "$p_i$", "$\ell_i$",
+  "code"], frame=True)}
+\end{table}
+
+\Wrap{
+  content/magyar={Fano-kód számolása (szemléltetéssel ami bonyolultabb mint maga az algoritmus)},
+  content/english={TODO}
+}
+
+\begin{sageexample}
+  sage: G = DiGraph()
+  ....: maxdepth = 4
+  ....: fc = ['' for a in abc]
+  ....: def split(u, v, parent, depth, code):
+  ....:     if maxdepth <= depth:
+  ....:         return
+  ....:     if u >= v:
+  ....:         fc[u] = code;
+  ....:         return
+  ....:     i, j = u, v
+  ....:     rp, lp = P[i], P[j]
+  ....:     rc, lc = abc[i], abc[j]
+  ....:     while i+1 < j:
+  ....:         if rp < lp:
+  ....:             i += 1
+  ....:             rp, rc = rp+P[i], rc+abc[i]
+  ....:         else:
+  ....:             j -= 1
+  ....:             lp, lc = lp+P[j], lc+abc[j]
+  ....:     rc, lc = rc + '\n' + str(rp), lc + '\n' + str(lp)
+  ....:     split(u, i, rc, depth+1, code+'0')
+  ....:     G.add_edge(parent, rc, '0')
+  ....:     split(j, v, lc, depth+1, code+'1')
+  ....:     G.add_edge(parent, lc, '1')
+\end{sageexample}
+
+
+\Wrap{
+  content/magyar={1. lépés után:},
+  content/english={TODO}
+}
+
+\begin{sageexample}
+  sage: maxdepth=1
+  ....: G = DiGraph()
+  ....: split(0, len(abc)-1, '', 0, '')
+  ....: GP = G.plot(layout='tree', edge_labels=True,
+  ....:             vertex_size=4000, figsize=3, vertex_color='white')
+\end{sageexample}
+
+\begin{figure}[ht]
+  \centering
+  \sageplot[scale=.5][png]{GP}
+  \caption{Fano-kód előállításának 1. iterációja (\texttt{GP})}
+\end{figure}
+
+\Wrap{
+content/magyar={2. lépés után:},
+content/english={TODO}
+}
+
+\begin{sageexample}
+  sage: maxdepth=2
+  ....: G = DiGraph()
+  ....: split(0, len(abc)-1, '', 0, '')
+  ....: GP = G.plot(layout='tree', edge_labels=True,
+  ....:             vertex_size=4000, figsize=5, vertex_color='white')
+\end{sageexample}
+
+\begin{figure}[ht]
+  \centering
+  \sageplot[scale=.5][png]{GP}
+  \caption{Fano-kód előállításának 2. iterációja (\texttt{GP})}
+\end{figure}
+\Wrap{
+content/magyar={3. lépés után:},
+content/english={TODO}
+}
+
+\begin{sageexample}
+  sage: maxdepth=4
+  ....: G = DiGraph()
+  ....: split(0, len(abc)-1, '', 0, '')
+  ....: GP = G.plot(layout='tree', edge_labels=True,
+  ....:             vertex_size=4000, figsize=7, vertex_color='white')
+\end{sageexample}
+
+\begin{figure}[ht]
+  \centering
+  \sageplot[scale=.5][png]{GP}
+  \caption{Fano-kód előállításának 3. iterációja (\texttt{GP})}
+\end{figure}
+
+\begin{table}[ht]
+  \centering
+  \sage{table([abc, P, fc], header_row=True, header_column=["ch", "$p_i$", "code"], frame=True)}
+\end{table}
+
+\Wrap{
+  content/magyar={Huffman-kód esetén:},
+  content/english={TODO}
+}
+
+Házi feladat
+
+%TODO with a better example that not too big and gives different result
